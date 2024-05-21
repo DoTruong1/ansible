@@ -1,0 +1,18 @@
+www:
+  vars:
+    ansible_user: ubuntu
+  hosts:
+    frontend01:
+      ansible_host: 198.19.249.120
+api:
+  vars:
+    ansible_user: ubuntu
+  hosts:
+    api01:
+      ansible_host: 198.19.249.45
+db:
+  vars:
+    ansible_user: ubuntu
+  hosts:
+    db01:
+      ansible_host: 198.19.249.149

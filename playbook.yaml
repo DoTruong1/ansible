@@ -1,0 +1,13 @@
+- name: My first play
+  hosts: www
+  become: true
+  remote_user: root
+  roles:
+    - common
+  # tasks:
+  #   - name: Ping my hosts
+  #     ansible.builtin.ping:
+
+  #   - name: Print message
+  #     ansible.builtin.debug:
+  #       msg: Hello world
