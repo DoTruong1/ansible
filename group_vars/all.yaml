@@ -1,0 +1,17 @@
+api_lb_host: api.home.arpa
+db_host: db.home.arpa
+ansible_user: ubuntu
+api_version: /api/v1
+db_user: vdt
+db_user_passw: vdt123
+db_name: users
+db_port: 3306
+###### BACKEND_VARS ######
+# db_user:
+# db_user_passw:
+# vdt_db:
+# db_port:
+# db_host:
+# www_host:
+###### DB #####
+

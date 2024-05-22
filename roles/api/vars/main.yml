@@ -1,0 +1,7 @@
+---
+# vars file for api
+api_image: dotruong1910/backend
+api_image_tag: test-v4
+api_port: 3000
+api_path: /api/v1
+api_replicas: 2

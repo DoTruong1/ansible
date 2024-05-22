@@ -1,13 +1,9 @@
-- name: My first play
-  hosts: www
+- name: install docker
+  hosts: all
   become: true
   remote_user: root
   roles:
     - common
-  # tasks:
-  #   - name: Ping my hosts
-  #     ansible.builtin.ping:
 
-  #   - name: Print message
-  #     ansible.builtin.debug:
-  #       msg: Hello world
+- import_playbook: playbooks/db.yaml
+- import_playbook: playbooks/api.yaml

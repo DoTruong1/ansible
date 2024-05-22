@@ -1,0 +1,52 @@
+---
+# # tasks file for api
+# - name: Tear down existing services
+#   community.docker.docker_compose:
+#     project_src: api
+#     state: absent
+- name: Create Nginx configuration directory
+  become: true
+  file:
+    path: /etc/nginx/conf.d
+    state: directory
+
+- name: Deploy Nginx configuration
+  become: true
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+- name: Tear down existing services
+  docker_compose:
+    project_src: /api
+    state: absent
+  ignore_errors: true
+
+- name: Create Docker Compose directory
+  become: true
+  file:
+    path: /api
+    state: directory
+    mode: "0755"
+
+- name: Write Docker Compose configuration
+  become: true
+  ansible.builtin.template:
+    src: docker-compose.yaml.j2
+    dest: /api/docker-compose.yaml
+    mode: "0644"
+
+- name: Create and start services
+  docker_compose:
+    project_src: /api
+  register: output
+- debug:
+    var: api
+- name: Run `docker-compose up` again
+  docker_compose:
+    project_src: /api
+    build: no
+  register: output
+- debug:
+    var: output
+- assert:
+    that: "not output.changed "

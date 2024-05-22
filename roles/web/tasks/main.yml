@@ -1,0 +1,16 @@
+# tasks file for web
+- name: stop existing container
+  command: docker stop web
+  ignore_errors: true
+
+- name: remove the container
+  command: docker rm web
+
+- name: Deploy web service
+  docker_container:
+    name: web
+    image: "{{ web_image }}:{{ web_image_tag}}"
+    ports:
+      - "{{ web_port }}:80"
+    env:
+      APP_API_URL: "{{ web_host }}"

@@ -1,6 +1,0 @@
----
-# tasks file for db
-- name: Check If Docker Is Installed
-  command: docker --version
-  register: docker_valid
-  ignore_errors: true

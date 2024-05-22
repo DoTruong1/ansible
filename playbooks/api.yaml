@@ -1,0 +1,5 @@
+- name: start api
+  hosts: apis
+  remote_user: ubuntu
+  roles:
+    - roles/api
