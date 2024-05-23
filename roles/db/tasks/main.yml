@@ -1,0 +1,46 @@
+---
+- name: check docker is active
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Check if db is already deployed
+  docker_container:
+    name: db
+    state: present
+  register: container_status
+  ignore_errors: true
+
+- name: deploy db service
+  block:
+    - name: Create a volume
+      community.docker.docker_volume:
+        name: volume_one
+
+    - name: stop existing container
+      community.docker.docker_container:
+        name: db
+        state: stopped
+
+    - name: remove the container
+      community.docker.docker_container:
+        name: db
+        state: absent
+
+    - name: Deploy database service
+      docker_container:
+        name: db
+        image: mariadb:lts
+        ports:
+          - "{{ db_port }}:3306"
+        env:
+          MARIADB_USER: "{{ db_user }}"
+          MARIADB_PASSWORD: "{{ db_user_passw }}"
+          MARIADB_DATABASE: "{{ db_name }}"
+          MARIADB_ROOT_PASSWORD: rootpws
+        volumes:
+          - db:/backup
+  when: container_status != "present" or container_status != "started"
+# tasks file for db
+

@@ -1,0 +1,30 @@
+version: '3'
+services:
+  backend:
+    image: "{{ api_image }}:{{ api_image_tag}}"
+    environment:
+      DB_USER: "{{ db_user }}"
+      DB_PASSWORD: "{{ db_user_passw}}"
+      DB_NAME: "{{ db_name }}"
+      DB_PORT: "{{ db_port }}"
+      DB_HOST: "{{ db_host }}"
+      COR_ORIGIN: "*"
+      API_PATH: "{{ api_path }}"
+      PORT: 3000
+    deploy:
+      replicas: "{{ api_replicas }}"
+    networks:
+      - loadbalancing
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - loadbalancing
+    depends_on:
+      - backend
+networks:
+  loadbalancing: {}
