@@ -3,11 +3,11 @@ services:
   backend:
     image: "{{ api_image }}:{{ api_image_tag}}"
     environment:
-      DB_USER: "{{ db_user }}"
-      DB_PASSWORD: "{{ db_user_passw}}"
-      DB_NAME: "{{ db_name }}"
-      DB_PORT: "{{ db_port }}"
-      DB_HOST: "{{ db_host }}"
+      DB_USER: "{{ db.demo.db_user }}"
+      DB_PASSWORD: "{{ db.demo.db_user_passw }}"
+      DB_NAME: "{{ db.demo.db_name }}"
+      DB_PORT: "{{ db.demo.db_port }}"
+      DB_HOST: "{{ db.demo.db_host }}"
       COR_ORIGIN: "*"
       API_PATH: "{{ api_path }}"
       PORT: 3000

@@ -22,7 +22,7 @@
       community.docker.docker_container:
         name: db
         state: stopped
-
+      ignore_errors: true
     - name: remove the container
       community.docker.docker_container:
         name: db
@@ -33,11 +33,11 @@
         name: db
         image: mariadb:lts
         ports:
-          - "{{ db_port }}:3306"
+          - "{{ db[env].db_port }}:3306"
         env:
-          MARIADB_USER: "{{ db_user }}"
-          MARIADB_PASSWORD: "{{ db_user_passw }}"
-          MARIADB_DATABASE: "{{ db_name }}"
+          MARIADB_USER: "{{ db[env].db_user }}"
+          MARIADB_PASSWORD: "{{ db[env].db_user_passw }}"
+          MARIADB_DATABASE: "{{ db[env].db_name }}"
           MARIADB_ROOT_PASSWORD: rootpws
         volumes:
           - db:/backup

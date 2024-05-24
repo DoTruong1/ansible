@@ -3,14 +3,14 @@ webs:
     web:
       ansible_host: 198.19.249.120
 apis:
-  vars:
-    ansible_user: ubuntu
+  children:
+    webs:
   hosts:
     api:
       ansible_host: 198.19.249.207
 dbs:
-  vars:
-    ansible_user: ubuntu
+  children:
+    apis:
   hosts:
     db:
       ansible_host: 198.19.249.129
