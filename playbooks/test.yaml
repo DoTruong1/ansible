@@ -1,8 +1,0 @@
-- hosts: apis
-  gather_facts: false
-  vars:
-    test_var1: A
-    test_var2: "{{ db[env].db_user }}"
-  tasks:
-    - debug:
-        var: vars

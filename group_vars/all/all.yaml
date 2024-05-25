@@ -1,0 +1,34 @@
+---
+env: default
+db:
+  default:
+    db_host: db.home.arpa
+    db_user: vdt
+    db_user_passw: vdt1234
+    db_name: users
+    db_port: 3306
+  prod:
+  test:
+
+frontends:
+  web:
+    default:
+      image: dotruong1910/frontend
+      tag: main-e250e77
+      # api_path: /api/v1
+      port: 80
+      replicas: 1
+      backend_env_url: default
+    production:
+    staging:
+
+api:
+  default:
+    api_image: dotruong1910/backend
+    api_image_tag: main-0c86b17
+    api_port: 3000
+    api_path: /api/v1
+    api_replicas: 2
+    api_lb_host: api.home.arpa
+  production:
+  staging:

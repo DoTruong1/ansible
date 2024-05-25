@@ -1,16 +1,17 @@
-webs:
+frontends:
   hosts:
     web:
       ansible_host: 198.19.249.120
 apis:
-  children:
-    webs:
   hosts:
-    api:
+    default:
       ansible_host: 198.19.249.207
 dbs:
-  children:
-    apis:
   hosts:
-    db:
+    default:
       ansible_host: 198.19.249.129
+# default:
+#   children:
+#     dbs:
+#     apis:
+#     webs:
