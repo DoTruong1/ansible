@@ -1,0 +1,5 @@
+- name: Run frontend image
+  hosts: webs
+  remote_user: ubuntu
+  roles:
+    - roles/web

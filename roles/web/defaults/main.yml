@@ -1,2 +1,14 @@
 ---
 # defaults file for web
+env: default
+frontends:
+  web:
+    default:
+      image: dotruong1910/frontend
+      tag: main-e250e77
+      # api_path: /api/v1
+      port: 80
+      replicas: 1
+      backend_env_url: default
+    production:
+    staging:

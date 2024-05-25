@@ -35,6 +35,10 @@
     dest: /api/docker-compose.yaml
     mode: "0644"
 
+- name: show templating results
+  debug:
+    msg: "{{ lookup('template', 'docker-compose.yaml.j2') }}"
+
 - name: Create and start services
   docker_compose:
     project_src: /api
@@ -46,7 +50,7 @@
     project_src: /api
     build: no
   register: output
-- debug:
-    var: output
+# - debug:
+#     var: output
 - assert:
     that: "not output.changed "

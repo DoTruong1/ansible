@@ -1,5 +1,9 @@
-- name: start api
+- name: Run api image
   hosts: apis
   remote_user: ubuntu
   roles:
     - roles/api
+  # tasks:
+  #   - debug:
+  #       msg: "Database group {{ item }}: {{ db_vars[item] }}"
+  #     loop: "{{ db_vars.keys() }}"

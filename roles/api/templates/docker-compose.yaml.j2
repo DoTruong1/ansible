@@ -1,18 +1,17 @@
 version: '3'
 services:
   backend:
-    image: "{{ api_image }}:{{ api_image_tag}}"
+    image: "{{  api[env].api_image }}:{{ api[env].api_image_tag}}"
     environment:
-      DB_USER: "{{ db_user }}"
-      DB_PASSWORD: "{{ db_user_passw}}"
-      DB_NAME: "{{ db_name }}"
-      DB_PORT: "{{ db_port }}"
-      DB_HOST: "{{ db_host }}"
-      COR_ORIGIN: "*"
-      API_PATH: "{{ api_path }}"
+      DB_USER: "{{ db[env].db_user }}"
+      DB_PASSWORD: "{{ db[env].db_user_passw }}"
+      DB_NAME: "{{ db[env].db_name }}"
+      DB_PORT: "{{ db[env].db_port }}"
+      DB_HOST: "{{ hostvars[(env +".db")].ansible_host }}"
+      API_PATH: "{{ api[env].api_path }}"
       PORT: 3000
     deploy:
-      replicas: "{{ api_replicas }}"
+      replicas: "{{ api[env].api_replicas }}"
     networks:
       - loadbalancing
   nginx:

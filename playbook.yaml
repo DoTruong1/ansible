@@ -1,9 +1,4 @@
-- name: install docker
-  hosts: all
-  become: true
-  remote_user: root
-  roles:
-    - common
-
+- import_playbook: playbooks/common.yaml
 - import_playbook: playbooks/db.yaml
 - import_playbook: playbooks/api.yaml
+- import_playbook: playbooks/web.yaml

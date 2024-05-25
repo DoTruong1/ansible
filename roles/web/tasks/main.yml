@@ -1,63 +1,38 @@
 # tasks file for web
-- name: stop existing container
-  command: docker stop web
-  ignore_errors: true
-
-- name: remove the container
-  command: docker rm web
-
-- name: Deploy web service
-  docker_container:
-    name: web
-    image: "{{ web_image }}:{{ web_image_tag}}"
-    ports:
-      - "{{ web_port }}:80"
-    env:
-      APP_API_URL: "{{ web_host }}"
-
----
 - name: check docker is active
   service:
     name: docker
     state: started
     enabled: yes
 
-- name: Check if db is already deployed
+- name: Get infos on container
+  community.docker.docker_container_info:
+    name: "web-{{ env }}"
+  register: docker_info
+
+- name: Stop a container
   docker_container:
-    name: db
-    state: present
-  register: container_status
-  ignore_errors: true
+    name: "web-{{ env }}"
+    state: stopped
+  when: docker_info.exists
 
-- name: deploy db service
-  block:
-    - name: Create a volume
-      community.docker.docker_volume:
-        name: volume_one
+- name: remove the container
+  docker_container:
+    name: "web-{{ env }}"
+    state: absent
+  when: docker_info.exists
 
-    - name: stop existing container
-      community.docker.docker_container:
-        name: db
-        state: stopped
+- name: Display all variables/facts known for a host
+  debug:
+    var: "hostvars['{{ env }}.api'].ansible_host"
+  tags: debug_info
 
-    - name: remove the container
-      community.docker.docker_container:
-        name: db
-        state: absent
-
-    - name: Deploy database service
-      docker_container:
-        name: db
-        image: mariadb:lts
-        ports:
-          - "{{ db_port }}:3306"
-        env:
-          MARIADB_USER: "{{ db_user }}"
-          MARIADB_PASSWORD: "{{ db_user_passw }}"
-          MARIADB_DATABASE: "{{ db_name }}"
-          MARIADB_ROOT_PASSWORD: rootpws
-        volumes:
-          - db:/backup
-  when: container_status != "present" or container_status != "started"
-# tasks file for db
-
+- name: Deploy web service
+  docker_container:
+    name: "web-{{ env }}"
+    image: "{{ web[env].web_image }}:{{ web[env].web_tag}}"
+    ports:
+      - "{{ web[env].web_port }}:80"
+    env:
+      APP_API_URL: "http://{{ hostvars[(env + '.api')].ansible_host }}"
+      APP_API_VERSION: "api/v1"
