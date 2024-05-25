@@ -1,5 +1,5 @@
 - name: start database
-  hosts: dbs:!apis
+  hosts: dbs
   remote_user: ubuntu
   roles:
     - roles/db

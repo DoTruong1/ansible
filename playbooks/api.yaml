@@ -1,5 +1,5 @@
 - name: Run api image
-  hosts: apis:!webs
+  hosts: apis
   remote_user: ubuntu
   roles:
     - roles/api

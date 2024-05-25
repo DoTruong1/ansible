@@ -22,11 +22,17 @@
     state: absent
   when: docker_info.exists
 
+- name: Display all variables/facts known for a host
+  debug:
+    var: "hostvars['{{ env }}.api'].ansible_host"
+  tags: debug_info
+
 - name: Deploy web service
   docker_container:
     name: "web-{{ env }}"
-    image: "{{ web[env].image }}:{{ web[env].tag}}"
+    image: "{{ web[env].web_image }}:{{ web[env].web_tag}}"
     ports:
-      - "{{ web[env].port }}:80"
+      - "{{ web[env].web_port }}:80"
     env:
-      APP_API_URL: "{{ web[env].backend_env_url }}"
+      APP_API_URL: "http://{{ hostvars[(env + '.api')].ansible_host }}"
+      APP_API_VERSION: "api/v1"

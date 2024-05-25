@@ -7,7 +7,7 @@ services:
       DB_PASSWORD: "{{ db[env].db_user_passw }}"
       DB_NAME: "{{ db[env].db_name }}"
       DB_PORT: "{{ db[env].db_port }}"
-      DB_HOST: "{{ hostvars[env].ansible_host }}"
+      DB_HOST: "{{ hostvars[(env +".db")].ansible_host }}"
       API_PATH: "{{ api[env].api_path }}"
       PORT: 3000
     deploy:

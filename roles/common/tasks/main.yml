@@ -96,5 +96,3 @@
       {% for item in ansible_play_batch %}
       {{ hostvars[item].ansible_host }}   {{ item }}.home.arpa    
       {% endfor %}
-
-- name: Set up docker network for db api

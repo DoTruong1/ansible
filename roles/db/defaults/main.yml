@@ -1,2 +1,11 @@
 ---
 # defaults file for db
+env: default
+db:
+  default:
+    db_user: vdt
+    db_user_passw: vdt1234
+    db_name: users
+    db_port: 3306
+  production:
+  test:

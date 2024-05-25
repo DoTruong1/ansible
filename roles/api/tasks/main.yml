@@ -50,7 +50,7 @@
     project_src: /api
     build: no
   register: output
-- debug:
-    var: output
+# - debug:
+#     var: output
 - assert:
     that: "not output.changed "
