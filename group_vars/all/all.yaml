@@ -2,7 +2,6 @@
 env: default
 db:
   default:
-    db_host: db.home.arpa
     db_user: vdt
     db_user_passw: vdt1234
     db_name: users
@@ -28,6 +27,5 @@ api:
     api_port: 3000
     api_path: /api/v1
     api_replicas: 2
-    api_lb_host: api.home.arpa
   production:
   test:
